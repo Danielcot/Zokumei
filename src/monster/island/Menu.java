@@ -21,16 +21,18 @@ import javax.swing.JLabel;
  * @author Omar xv
  */
 public class Menu extends JFrame{ 
-    private JLabel dragon, segundon, ayuda;
+    private JLabel dragon, segundon, ayuda, titulo;
     private JLabel fondillo;
+    
     public boolean openedOnce;
     public final AudioClip menu;
     public Menu()
     {
         super();
-        ayuda = new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/Ayuda.jpg")));
+        ayuda = new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/Ayuda.png")));
         dragon= new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/1.gif")));
-        fondillo = new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/fondo.jpg")));
+        fondillo= new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/fondo.jpg")));
+        titulo= new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/titulo.png")));
         segundon= new JLabel(new ImageIcon());    
         ayuda.setLocation(1040,460);
         ayuda.setSize(150,50);
@@ -40,22 +42,36 @@ public class Menu extends JFrame{
         fondillo.setSize(1280, 720);
         dragon.setSize(200,200);
         dragon.setLocation(240,260);
+        titulo.setLocation(500,0);
+        titulo.setSize(280,180);
+        
         menu = java.applet.Applet.newAudioClip(getClass().getResource("audio/16.wav"));
         menu.play();
         setLayout(null);
         ayuda.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-                new Ayuda();
-            }
+                Ayuda aiuda=  new  Ayuda();
+                aiuda.setVisible(true);
+                aiuda.addWindowListener(new WindowAdapter() {
+                    public void windowClosed(WindowEvent w){
+                        getMe().setVisible(true);
+                        
+                    }
+                });
+                getMe().setVisible(false);
+           }
         });
         dragon.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 Tablero tablero = new Tablero();
                 tablero.setVisible(true);
+                menu.stop();
                 tablero.addWindowListener(new WindowAdapter() {
                     public void windowClosed(WindowEvent we){
                         getMe().setVisible(true);
+                        
                     }
+                    
                 });
                 getMe().setVisible(false);
             }
@@ -74,12 +90,14 @@ public class Menu extends JFrame{
             }
         });
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.add(titulo);
         this.add(ayuda);
         this.add(segundon);
         this.add(dragon);
         this.add(fondillo);
         this.setSize(1280,720);
         this.setResizable(false);
+        
         this.setLocationRelativeTo(null);
         if(openedOnce == false){
             new Splash(this);
