@@ -19,20 +19,23 @@ public class Personaje extends JLabel{
     private int fotograma;
     private int sentido;
     private int noPersonaje;
+    private boolean flagMovimiento;
     private Timer tmrMovimiento;
     public Personaje(int noPersonaje)
     {
         super();
         sentido=3; //dar un numero a cadda direccion 
+        flagMovimiento=false;
         setSize(40,40);
         setLocation(0,0);
         this.noPersonaje=noPersonaje;
         fotograma=1;
         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+noPersonaje+"/caminando/abajo/"+fotograma+".png")));
-        tmrMovimiento=new Timer(120, new ActionListener(){
+        tmrMovimiento=new Timer(10, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                flagMovimiento = true;
                 switch(sentido)
                 {
                     case 1:
@@ -41,12 +44,12 @@ public class Personaje extends JLabel{
                         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+getNoPersonaje()+"/caminando/arriba/"+fotograma+".png")));
                         break;
                     case 2:
-                        if (getLocation().x<660)
+                        if (getLocation().x<2120)
                             setLocation(getLocation().x+5,getLocation().y);
                         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+getNoPersonaje()+"/caminando/derecha/"+fotograma+".png")));
                         break;
                     case 3:
-                        if (getLocation().y<620)
+                        if (getLocation().y<2120)
                             setLocation(getLocation().x,getLocation().y+5);
                         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+getNoPersonaje()+"/caminando/abajo/"+fotograma+".png")));
                         break;
@@ -60,6 +63,7 @@ public class Personaje extends JLabel{
                 if(fotograma==9)
                 {
                     tmrMovimiento.stop();
+                    flagMovimiento=false;
                 }
             }
         }); 
@@ -71,9 +75,12 @@ public class Personaje extends JLabel{
     }
     public void muevete(int sentido)
     {
-        this.sentido=sentido;
-        fotograma=1;
-        tmrMovimiento.start();
+        if(flagMovimiento == false){
+            this.sentido=sentido;
+            fotograma=1;
+            tmrMovimiento.start();
+        }
     }
+    
     
 }

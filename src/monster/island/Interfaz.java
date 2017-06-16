@@ -7,7 +7,6 @@ package monster.island;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javafx.scene.paint.Color;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -19,7 +18,7 @@ public class Interfaz extends JPanel{
     private JButton pausa;
     public Interfaz(){
         super();
-        pausa = new JButton();
+        pausa = new JButton("Salir");
         this.setSize(430,720);
         this.setBackground(java.awt.Color.BLUE);
         this.setLocation(720,0);

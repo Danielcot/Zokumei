@@ -35,14 +35,20 @@ public class Tablero extends JFrame
         this.add(capas);
         capas.setVisible(true);
         capas.add(map, new Integer(1));
-        capas.add(interfaz, new Integer(1));
+        capas.add(interfaz, new Integer(2));
         map.setFocusable(true);
         map.requestFocus();
         openedOnce = false;
         setSize(1150,720); 
+        interfaz.addComponentListener(new ComponentAdapter(){
+            public void componentHidden(ComponentEvent ce){
+                getMe().dispose();
+            }
+        });
         this.getContentPane().setLayout(null);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        setUndecorated(true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     private Tablero getMe(){

@@ -53,7 +53,7 @@ public class Menu extends JFrame{
                 Tablero tablero = new Tablero();
                 tablero.setVisible(true);
                 tablero.addWindowListener(new WindowAdapter() {
-                    public void windowClosing(WindowEvent we){
+                    public void windowClosed(WindowEvent we){
                         getMe().setVisible(true);
                     }
                 });
