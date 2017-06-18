@@ -5,6 +5,8 @@
  */
 package monster.island;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -16,19 +18,26 @@ public class CampoBatalla extends JFrame{
     private int noEnemigos;
     private JPanel HUD,opciones,estatus;
     private Enemigo ene1, ene2, ene3;
+    private Image hub, op, es;
     public CampoBatalla(){
+        hub = new ImageIcon(getClass().getResource("imagenes/interfaz/HUD.png")).getImage();
+        op = new ImageIcon(getClass().getResource("imagenes/interfaz/opciones.png")).getImage();
+        es = new ImageIcon(getClass().getResource("imagenes/interfaz/estatus.png")).getImage();
         HUD = new JPanel();
         opciones = new JPanel();
         estatus =new JPanel();
         ene1 = new Enemigo();
         ene2 = new Enemigo();
         ene3 = new Enemigo();
-        
+
         setSize(1280, 720);
         setLayout(null);
         HUD.setLocation(0, 504);
         HUD.setSize(174, 216);
         opciones.setLocation(176, 504);
-        opciones.setSize(null);
+        opciones.setSize(1106,216);
+        estatus.setLocation(945,396);
+        estatus.setSize(335,107);
     }
+    
 }

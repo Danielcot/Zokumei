@@ -5,8 +5,11 @@
  */
 package monster.island;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -16,11 +19,13 @@ import javax.swing.JPanel;
  */
 public class Interfaz extends JPanel{
     private JButton pausa;
+    private Image fondillo;
     public Interfaz(){
         super();
         pausa = new JButton("Salir");
+        fondillo = new ImageIcon(getClass().getResource("imagenes/interfaz/fondillo.png")).getImage();
         this.setSize(430,720);
-        this.setBackground(java.awt.Color.BLUE);
+        this.setOpaque(false);
         this.setLocation(720,0);
         this.add(pausa);
         this.setLayout(null);
@@ -36,5 +41,9 @@ public class Interfaz extends JPanel{
     }
     private Interfaz getMe(){
         return this;
+    }
+    @Override
+    protected void paintComponent(Graphics g){
+        g.drawImage(fondillo, WIDTH, WIDTH, this);
     }
 }

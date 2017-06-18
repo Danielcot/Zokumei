@@ -7,6 +7,8 @@ package monster.island;
 
 import java.applet.AudioClip;
 import java.awt.Color;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -21,18 +23,30 @@ import javax.swing.JPanel;
 public class Mapa extends JPanel{
     private Personaje personaje;
     final AudioClip oyasumi;
-    private JLabel tiles[][], superior[][];
+    private String nombre, texto;
+    private JLabel talk, tiles[][], superior[][];
+    private boolean flagPausa;
     private JLayeredPane capitas;
     private int images[][], superiorima[][];
-    private int i, ii, buyXright, buyYup,buyYdown,buyXleft;
+    private int i, ii, buyXright, buyYup,buyYdown,buyXleft, x, y;
     public Mapa(){
         super();
+            flagPausa = false;
             i = 0;
             ii = 0;
+            nombre = "";
+            texto = "";
             buyXleft = 0;
             buyYup = 0;
             buyYdown = 0;
             buyXright = 0;
+            talk = new JLabel(new ImageIcon(getClass().getResource("imagenes/interfaz/canDo.png")));
+            personaje = new Personaje(1);
+            personaje.setLocation(80, 160);
+            talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
+            talk.setSize(40, 40);
+            x = personaje.getLocation().x / 40;
+            y = personaje.getLocation().y / 40;
             capitas = new JLayeredPane();
             int images[][] = new int [][]{
                 {1, 2, 3, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22},
@@ -92,9 +106,8 @@ public class Mapa extends JPanel{
             };
         capitas.setLocation(0, 0);
         capitas.setSize(2160, 2160);
-        personaje = new Personaje(1);
         oyasumi = java.applet.Applet.newAudioClip(getClass().getResource("audio/35.wav"));
-        oyasumi.stop();
+        oyasumi.play();
         JLabel tiles[][] = new JLabel[54][54];
         for(i = 0;i < tiles.length;i++){
             for(ii = 0;ii < tiles[i].length;ii++){
@@ -152,7 +165,7 @@ public class Mapa extends JPanel{
             {84, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {86, 87, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75, 75, 75, 0, 0, 0, 0, 0, 75, 75, 75},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 57, 75, 75, 75, 75, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75, 75, 75, 75, 75, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 76, 77, 0, 0, 0, 0, 0, 0, 0, 0, 0, 76, 77, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -160,27 +173,35 @@ public class Mapa extends JPanel{
             {0, 0, 0, 86, 87, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 79, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        capitas.setLocation(0, 0);
-        capitas.setSize(2160, 2160);
         JLabel superior[][] = new JLabel[54][54];
         for(i = 0;i < superior.length;i++){
-            for(ii = 0;ii < tiles[i].length;ii++){
-                superior[i][ii] = new JLabel(new ImageIcon(getClass().getResource("imagenes/mapa/"+images[ii][i]+".png")));
+            for(ii = 0;ii < superior[i].length;ii++){
+                superior[i][ii] = new JLabel(new ImageIcon(getClass().getResource("imagenes/mapa/"+superiorima[ii][i]+".png")));
                 superior[i][ii].setSize(40, 40);
                 superior[i][ii].setLocation(i*40, ii*40);
                 capitas.add(superior[i][ii], new Integer(3));
             }
         }
-        this.setBackground(Color.red);
+        this.setBackground(new Color(0, 76, 0));
         this.setLocation(0, 0);
-        this.setSize(2160, 2160);
+        this.setSize(2200, 2160);
         this.setLayout(null);
         this.add(capitas);
-        personaje.setLocation(80, 160);
         capitas.add(personaje, new Integer(2));
+        capitas.add(talk, new Integer(2));
         this.addKeyListener(new KeyAdapter(){
             @Override
             public void keyPressed(KeyEvent ke) {
+                if (ke.getKeyCode()==KeyEvent.VK_SPACE)
+                {
+                    x = personaje.getLocation().x / 40;
+                    y = personaje.getLocation().y / 40;
+                   if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){ //Aqui se pone el rango en que se puede hablar con un personaje y lo que este se va a decir, para nuevo rango y dialogo copiar todo y cambiar nombre, texto y condicion
+                       nombre = "skull";
+                       texto = "MAMA MIA";
+                       getMe().setFocusable(false);
+                   }
+                }
                 if (ke.getKeyCode()==KeyEvent.VK_DOWN)
                 {
                     if(!(personaje.getLocation().y == 2040)){
@@ -192,21 +213,37 @@ public class Mapa extends JPanel{
                         }
                 }
                     personaje.muevete(3);
+                    if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
+                        talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
+                        talk.setVisible(true);
+                    }
+                    else{
+                        talk.setVisible(false);
+                    }
                 }
                 else if (ke.getKeyCode()==KeyEvent.VK_LEFT)
                 {
-                    if((personaje.getLocation().x >120)){
+                    if((personaje.getLocation().x >120)){   
                         if(personaje.getLocation().x == 120-(buyXleft*40)){
                             personaje.setLocation(personaje.getLocation().x + 40, personaje.getLocation().y);
                             getMe().setLocation(getMe().getLocation().x + 40, getMe().getLocation().y);
                             buyXright--;
                             buyXleft++;
                         }
-                }
+                    }
                     personaje.muevete(4);
+                    if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
+                        talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
+                        talk.setVisible(true);
+                    }
+                    else{
+                        talk.setVisible(false);
+                    }
                 }
                 else  if (ke.getKeyCode()==KeyEvent.VK_UP)
                 {
+                    x = personaje.getLocation().x / 40;
+                    y = personaje.getLocation().y / 40;
                     if((personaje.getLocation().y > 120)){
                         if(personaje.getLocation().y == 120-(buyYup*40)){
                             personaje.setLocation(personaje.getLocation().x, personaje.getLocation().y + 40);
@@ -216,9 +253,18 @@ public class Mapa extends JPanel{
                         }
                 }
                     personaje.muevete(1);
+                    if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
+                        talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
+                        talk.setVisible(true);
+                    }
+                    else{
+                        talk.setVisible(false);
+                    }
                 }
                 else if (ke.getKeyCode()==KeyEvent.VK_RIGHT)
                 {
+                    x = personaje.getLocation().x / 40;
+                    y = personaje.getLocation().y / 40;
                     if(!(personaje.getLocation().x == 2040)){
                         if(personaje.getLocation().x == 600+(buyXright*40)){
                             personaje.setLocation(personaje.getLocation().x - 40, personaje.getLocation().y);
@@ -228,6 +274,13 @@ public class Mapa extends JPanel{
                         }
                 }
                     personaje.muevete(2);
+                    if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
+                        talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
+                        talk.setVisible(true);
+                    }
+                    else{
+                        talk.setVisible(false);
+                    }
                 }
             }
         });
@@ -237,6 +290,15 @@ public class Mapa extends JPanel{
     }
     private Mapa getMe(){
         return this;
+    }
+    public boolean isPaused(){
+        return flagPausa;
+    }
+    public String getNombre(){
+        return nombre;
+    }    
+    public String getTexto(){
+        return texto;
     }
 }
  

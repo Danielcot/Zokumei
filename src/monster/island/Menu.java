@@ -21,7 +21,7 @@ import javax.swing.JLabel;
  * @author Omar xv
  */
 public class Menu extends JFrame{ 
-    private JLabel dragon, segundon, ayuda, titulo;
+    private JLabel dragon, segundon, ayuda, titulo, salir;
     private JLabel fondillo;
     
     public boolean openedOnce;
@@ -33,6 +33,7 @@ public class Menu extends JFrame{
         dragon= new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/1.gif")));
         fondillo= new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/fondo.jpg")));
         titulo= new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/titulo.png")));
+        salir= new JLabel(new ImageIcon(getClass().getResource("imagenes/menu/salir.png")));
         segundon= new JLabel(new ImageIcon());    
         ayuda.setLocation(1040,460);
         ayuda.setSize(150,50);
@@ -44,6 +45,8 @@ public class Menu extends JFrame{
         dragon.setLocation(240,260);
         titulo.setLocation(500,0);
         titulo.setSize(280,180);
+        salir.setSize(100,150);
+        salir.setLocation(100,500);
         
         menu = java.applet.Applet.newAudioClip(getClass().getResource("audio/16.wav"));
         menu.play();
@@ -55,7 +58,6 @@ public class Menu extends JFrame{
                 aiuda.addWindowListener(new WindowAdapter() {
                     public void windowClosed(WindowEvent w){
                         getMe().setVisible(true);
-                        
                     }
                 });
                 getMe().setVisible(false);
@@ -69,7 +71,7 @@ public class Menu extends JFrame{
                 tablero.addWindowListener(new WindowAdapter() {
                     public void windowClosed(WindowEvent we){
                         getMe().setVisible(true);
-                        
+                        getMusic().play();
                     }
                     
                 });
@@ -89,7 +91,14 @@ public class Menu extends JFrame{
                 getMe().setVisible(false);
             }
         });
+        salir.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                System.exit(0);
+            }
+        });
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.add(salir);
         this.add(titulo);
         this.add(ayuda);
         this.add(segundon);
@@ -97,6 +106,7 @@ public class Menu extends JFrame{
         this.add(fondillo);
         this.setSize(1280,720);
         this.setResizable(false);
+        setUndecorated(true);
         
         this.setLocationRelativeTo(null);
         if(openedOnce == false){
@@ -104,8 +114,11 @@ public class Menu extends JFrame{
             openedOnce = true;
         }
     }
-    public Menu getMe()
+    private Menu getMe()
     {
         return this;
+    }
+    private AudioClip getMusic(){
+        return menu;
     }
 }
