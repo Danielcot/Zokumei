@@ -16,19 +16,22 @@ import javax.swing.JPanel;
  */
 public class CampoBatalla extends JFrame{
     private int noEnemigos;
-    private JPanel HUD,opciones,estatus;
+    private panelBatalla HUD,opciones,estatus;
     private Enemigo ene1, ene2, ene3;
     private Image hub, op, es;
     public CampoBatalla(){
         hub = new ImageIcon(getClass().getResource("imagenes/interfaz/HUD.png")).getImage();
         op = new ImageIcon(getClass().getResource("imagenes/interfaz/opciones.png")).getImage();
         es = new ImageIcon(getClass().getResource("imagenes/interfaz/estatus.png")).getImage();
-        HUD = new JPanel();
-        opciones = new JPanel();
-        estatus =new JPanel();
+        HUD = new panelBatalla();
+        opciones = new panelBatalla();
+        estatus =new panelBatalla();
         ene1 = new Enemigo();
         ene2 = new Enemigo();
         ene3 = new Enemigo();
+        HUD.setImage(hub);
+        opciones.setImage(op);
+        estatus.setImage(es);
 
         setSize(1280, 720);
         setLayout(null);
@@ -39,5 +42,4 @@ public class CampoBatalla extends JFrame{
         estatus.setLocation(945,396);
         estatus.setSize(335,107);
     }
-    
 }

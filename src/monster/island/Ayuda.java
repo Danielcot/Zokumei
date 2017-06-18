@@ -42,7 +42,7 @@ public class Ayuda extends JFrame{
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                
+                getMe().dispose();
             }
         });
         this.setLocationRelativeTo(null);
@@ -52,4 +52,8 @@ public class Ayuda extends JFrame{
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setVisible(true); 
    }
+    private Ayuda getMe()
+    {
+        return this;
+    }
 }
