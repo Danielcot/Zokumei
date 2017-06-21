@@ -44,6 +44,6 @@ public class Interfaz extends JPanel{
     }
     @Override
     protected void paintComponent(Graphics g){
-        g.drawImage(fondillo, WIDTH, WIDTH, this);
+        g.drawImage(fondillo, 0, 0, this);
     }
 }

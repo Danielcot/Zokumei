@@ -11,6 +11,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -27,19 +30,27 @@ public class Mapa extends JPanel{
     private JLabel talk, tiles[][], superior[][];
     private boolean flagPausa;
     private JLayeredPane capitas;
+    private boolean esCaminable[][];
     private int images[][], superiorima[][];
-    private int i, ii, buyXright, buyYup,buyYdown,buyXleft, x, y;
+    private int i, ii, buyXright, buyYup,buyYdown,buyXleft, x, y, j, jj, randInt;
+    private Random rand;
+    private CampoBatalla guerra;
     public Mapa(){
         super();
+            rand = new Random();
             flagPausa = false;
             i = 0;
             ii = 0;
+            j = 0;
+            jj = 0;
             nombre = "";
             texto = "";
             buyXleft = 0;
             buyYup = 0;
             buyYdown = 0;
             buyXright = 0;
+            randInt = 0;
+            guerra = null;
             talk = new JLabel(new ImageIcon(getClass().getResource("imagenes/interfaz/canDo.png")));
             personaje = new Personaje(1);
             personaje.setLocation(80, 160);
@@ -182,6 +193,17 @@ public class Mapa extends JPanel{
                 capitas.add(superior[i][ii], new Integer(3));
             }
         }
+        final boolean esCaminable[][] = new boolean[54][54];
+            for(j = 0;j < esCaminable.length;j++){
+                for(jj = 0;jj < esCaminable[j].length;jj++){
+                    if(images[jj][j] <= 50){
+                        esCaminable[j][jj] = false;
+                    }
+                    else{
+                        esCaminable[j][jj] = true;
+                    }
+                }
+            }
         this.setBackground(new Color(0, 76, 0));
         this.setLocation(0, 0);
         this.setSize(2200, 2160);
@@ -201,18 +223,55 @@ public class Mapa extends JPanel{
                        texto = "MAMA MIA";
                        getMe().setFocusable(false);
                    }
+                   else if((y >= 14 && y <= 16) && (x >= 48 && x <= 50)){
+                       nombre = "guy in a rock";
+                       texto = "Que onda arnal";
+                       getMe().setFocusable(false);
+                   }
+                   else if((y >= 28 && y <= 30) && (x >= 10 && x <= 12)){
+                       nombre = "ghost";
+                       texto = "buuu..... te asuste?";
+                       getMe().setFocusable(false);
+                   }
+                   else if((y >= 43 && y <= 45) && (x >= 11&& x <= 13)){
+                       nombre = "vikingo";
+                       texto = "Que onda arnal";
+                       getMe().setFocusable(false);
+                   }
+                   else if((y >= 34 && y <= 36) && (x >= 26 && x <= 28)){
+                       nombre = "Maradona Goku";
+                       texto = "Hola soy Goku";
+                       getMe().setFocusable(false);
+                   }
+                   else if((y >= 24 && y <= 26) && (x >= 32 && x <= 34)){
+                       nombre = "guy in a rock";
+                       texto = "Que onda arnal";
+                       getMe().setFocusable(false);
+                   }
                 }
-                if (ke.getKeyCode()==KeyEvent.VK_DOWN)
-                {
+                else if(ke.getKeyCode()==KeyEvent.VK_DOWN){
+                    x = personaje.getLocation().x / 40;
+                    y = personaje.getLocation().y / 40;
                     if(!(personaje.getLocation().y == 2040)){
                         if(personaje.getLocation().y == 600+(buyYdown*40)){
-                            personaje.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
                             getMe().setLocation(getMe().getLocation().x, getMe().getLocation().y - 40);
                             buyYup--;
-                            buyYdown++;
+                            buyYdown++;   
                         }
-                }
-                    personaje.muevete(3);
+                    }
+                    if(!(personaje.getLocation().y == 2120)){
+                        if(esCaminable[x][y+1] == true){
+                            personaje.muevete(3);     
+                            randInt = rand.nextInt(4);
+                            if(randInt == 3){
+                                guerra = new CampoBatalla();
+                                guerra.addWindowListener(new WindowAdapter() {
+                                    public void windowClosed(WindowEvent we){
+                                    }
+                                });
+                            }
+                        }
+                    }
                     if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
                         talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
                         talk.setVisible(true);
@@ -223,15 +282,24 @@ public class Mapa extends JPanel{
                 }
                 else if (ke.getKeyCode()==KeyEvent.VK_LEFT)
                 {
+                    x = personaje.getLocation().x / 40;
+                    y = personaje.getLocation().y / 40;
                     if((personaje.getLocation().x >120)){   
                         if(personaje.getLocation().x == 120-(buyXleft*40)){
-                            personaje.setLocation(personaje.getLocation().x + 40, personaje.getLocation().y);
                             getMe().setLocation(getMe().getLocation().x + 40, getMe().getLocation().y);
                             buyXright--;
                             buyXleft++;
                         }
                     }
-                    personaje.muevete(4);
+                    if(!(personaje.getLocation().x == 0)){
+                        if(esCaminable[x-1][y] == true){
+                            personaje.muevete(4);      
+                            randInt = rand.nextInt(4);
+                            if(randInt == 3){
+                                guerra = new CampoBatalla();
+                            }
+                        }
+                    }
                     if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
                         talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
                         talk.setVisible(true);
@@ -246,20 +314,25 @@ public class Mapa extends JPanel{
                     y = personaje.getLocation().y / 40;
                     if((personaje.getLocation().y > 120)){
                         if(personaje.getLocation().y == 120-(buyYup*40)){
-                            personaje.setLocation(personaje.getLocation().x, personaje.getLocation().y + 40);
                             getMe().setLocation(getMe().getLocation().x, getMe().getLocation().y + 40);
                             buyYup++;
                             buyYdown--;
                         }
+                    }    
+                if(esCaminable[x][y-1] == true){
+                    personaje.muevete(1);      
+                    randInt = rand.nextInt(4);
+                            if(randInt == 3){
+                                guerra = new CampoBatalla();
+                            }
                 }
-                    personaje.muevete(1);
-                    if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
-                        talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
-                        talk.setVisible(true);
-                    }
-                    else{
-                        talk.setVisible(false);
-                    }
+                if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
+                    talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
+                    talk.setVisible(true);
+                }
+                else{
+                    talk.setVisible(false);
+                }
                 }
                 else if (ke.getKeyCode()==KeyEvent.VK_RIGHT)
                 {
@@ -267,13 +340,20 @@ public class Mapa extends JPanel{
                     y = personaje.getLocation().y / 40;
                     if(!(personaje.getLocation().x == 2040)){
                         if(personaje.getLocation().x == 600+(buyXright*40)){
-                            personaje.setLocation(personaje.getLocation().x - 40, personaje.getLocation().y);
                             getMe().setLocation(getMe().getLocation().x - 40, getMe().getLocation().y);
                             buyXright++;
                             buyXleft--;
                         }
-                }
-                    personaje.muevete(2);
+                    }
+                    if(!(personaje.getLocation().x == 2120)){
+                        if(esCaminable[x+1][y] == true){
+                            personaje.muevete(2);    
+                            randInt = rand.nextInt(4);
+                            if(randInt == 3){
+                                guerra = new CampoBatalla();
+                            }
+                        }
+                    }   
                     if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
                         talk.setLocation(personaje.getLocation().x, personaje.getLocation().y - 40);
                         talk.setVisible(true);

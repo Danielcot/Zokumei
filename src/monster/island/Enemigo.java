@@ -15,7 +15,8 @@ public class Enemigo  extends JLabel{
         att2 = new Ataque();
         att3 = new Ataque();
         att4 = new Ataque();
-        randInt = rand.nextInt(noAtaques); //Aqui hay un entero asignado al azar, que es responsable de elegir que ataque usara el enemigo
+        noAtaques = 0;
+        randInt = 0; //Aqui hay un entero asignado al azar, que es responsable de elegir que ataque usara el enemigo
         noAtaques = 0; //el numero de ataques que puede llegar a usar un enemigo (maximo 4)
         HP = 0;
         ATT = 0;

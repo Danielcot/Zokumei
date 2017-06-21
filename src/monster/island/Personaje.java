@@ -21,6 +21,7 @@ public class Personaje extends JLabel{
     private int noPersonaje;
     private boolean flagMovimiento;
     private Timer tmrMovimiento;
+    private JLabel talk;
     public Personaje(int noPersonaje)
     {
         super();
@@ -31,7 +32,8 @@ public class Personaje extends JLabel{
         this.noPersonaje=noPersonaje;
         fotograma=1;
         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+noPersonaje+"/caminando/abajo/"+fotograma+".png")));
-        tmrMovimiento=new Timer(10, new ActionListener(){
+        talk = new JLabel(new ImageIcon(getClass().getResource("imagenes/interfaz/canDo.png")));
+        tmrMovimiento=new Timer(100, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e)
             {
@@ -41,21 +43,25 @@ public class Personaje extends JLabel{
                     case 1:
                         if (getLocation().y>0)
                             setLocation(getLocation().x,getLocation().y-5);
+                            talk.setLocation(getLocation().x,getLocation().y-5);
                         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+getNoPersonaje()+"/caminando/arriba/"+fotograma+".png")));
                         break;
                     case 2:
                         if (getLocation().x<2120)
                             setLocation(getLocation().x+5,getLocation().y);
+                            talk.setLocation(getLocation().x+5,getLocation().y);
                         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+getNoPersonaje()+"/caminando/derecha/"+fotograma+".png")));
                         break;
                     case 3:
                         if (getLocation().y<2120)
                             setLocation(getLocation().x,getLocation().y+5);
+                        talk.setLocation(getLocation().x,getLocation().y+5);
                         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+getNoPersonaje()+"/caminando/abajo/"+fotograma+".png")));
                         break;
                     case 4:
                         if (getLocation().x>0)
                             setLocation(getLocation().x-5,getLocation().y);
+                        talk.setLocation(getLocation().x-5,getLocation().y);
                         setIcon(new ImageIcon(getClass().getResource("imagenes/personajes/"+getNoPersonaje()+"/caminando/izquierda/"+fotograma+".png")));
                         break;
                 }

@@ -47,7 +47,6 @@ public class Menu extends JFrame{
         titulo.setSize(280,180);
         salir.setSize(100,150);
         salir.setLocation(100,500);
-        
         menu = java.applet.Applet.newAudioClip(getClass().getResource("audio/16.wav"));
         menu.play();
         setLayout(null);
@@ -107,7 +106,6 @@ public class Menu extends JFrame{
         this.setSize(1280,720);
         this.setResizable(false);
         setUndecorated(true);
-        
         this.setLocationRelativeTo(null);
         if(openedOnce == false){
             new Splash(this);
