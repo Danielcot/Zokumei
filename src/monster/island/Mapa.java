@@ -223,29 +223,34 @@ public class Mapa extends JPanel{
                        texto = "MAMA MIA";
                        getMe().setFocusable(false);
                    }
-                   else if((y >= 14 && y <= 16) && (x >= 48 && x <= 50)){
+                   else if((y >= 13 && y <= 15) && (x >= 46 && x <= 48)){
                        nombre = "guy in a rock";
-                       texto = "Que onda arnal";
+                       texto = "Que onda carnal";
                        getMe().setFocusable(false);
                    }
-                   else if((y >= 28 && y <= 30) && (x >= 10 && x <= 12)){
+                   else if((y >= 27 && y <= 29) && (x >= 9 && x <= 12)){
                        nombre = "ghost";
                        texto = "buuu..... te asuste?";
                        getMe().setFocusable(false);
                    }
-                   else if((y >= 43 && y <= 45) && (x >= 11&& x <= 13)){
+                   else if((y >= 42 && y <= 44) && (x >= 10&& x <= 12)){
                        nombre = "vikingo";
-                       texto = "Que onda arnal";
+                       texto = "Que onda carnal";
                        getMe().setFocusable(false);
                    }
-                   else if((y >= 34 && y <= 36) && (x >= 26 && x <= 28)){
+                   else if((y >= 33 && y <= 35) && (x >= 26 && x <= 28)){
                        nombre = "Maradona Goku";
                        texto = "Hola soy Goku";
                        getMe().setFocusable(false);
                    }
-                   else if((y >= 24 && y <= 26) && (x >= 32 && x <= 34)){
-                       nombre = "guy in a rock";
-                       texto = "Que onda arnal";
+                   else if((y >= 22 && y <= 24) && (x >= 31 && x <= 33)){
+                       nombre = "campesino";
+                       texto = "Que onda carnal";
+                       getMe().setFocusable(false);
+                   }
+                   else if((y >= 41 && y <= 43) && (x >= 47 && x <= 49)){
+                       nombre = "knight";
+                       texto = "Que onda carnal";
                        getMe().setFocusable(false);
                    }
                 }
@@ -262,7 +267,7 @@ public class Mapa extends JPanel{
                     if(!(personaje.getLocation().y == 2120)){
                         if(esCaminable[x][y+1] == true){
                             personaje.muevete(3);     
-                            randInt = rand.nextInt(4);
+                            randInt = rand.nextInt(149);
                             if(randInt == 3){
                                 guerra = new CampoBatalla();
                                 guerra.addWindowListener(new WindowAdapter() {
@@ -294,7 +299,7 @@ public class Mapa extends JPanel{
                     if(!(personaje.getLocation().x == 0)){
                         if(esCaminable[x-1][y] == true){
                             personaje.muevete(4);      
-                            randInt = rand.nextInt(4);
+                            randInt = rand.nextInt(149);
                             if(randInt == 3){
                                 guerra = new CampoBatalla();
                             }
@@ -321,7 +326,7 @@ public class Mapa extends JPanel{
                     }    
                 if(esCaminable[x][y-1] == true){
                     personaje.muevete(1);      
-                    randInt = rand.nextInt(4);
+                    randInt = rand.nextInt(149);
                             if(randInt == 3){
                                 guerra = new CampoBatalla();
                             }
@@ -348,7 +353,7 @@ public class Mapa extends JPanel{
                     if(!(personaje.getLocation().x == 2120)){
                         if(esCaminable[x+1][y] == true){
                             personaje.muevete(2);    
-                            randInt = rand.nextInt(4);
+                            randInt = rand.nextInt(149);
                             if(randInt == 3){
                                 guerra = new CampoBatalla();
                             }
