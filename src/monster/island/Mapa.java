@@ -32,9 +32,10 @@ public class Mapa extends JPanel{
     private JLayeredPane capitas;
     private boolean esCaminable[][];
     private int images[][], superiorima[][];
-    private int i, ii, buyXright, buyYup,buyYdown,buyXleft, x, y, j, jj, randInt;
+    private int i, ii, buyXright, buyYup,buyYdown,buyXleft, x, y, j, jj, randInt, randNums, randEne1, randEne2, randEne3;
     private Random rand;
     private CampoBatalla guerra;
+    public int turno;
     public Mapa(){
         super();
             rand = new Random();
@@ -43,6 +44,7 @@ public class Mapa extends JPanel{
             ii = 0;
             j = 0;
             jj = 0;
+            turno = 0;
             nombre = "";
             texto = "";
             buyXleft = 0;
@@ -50,6 +52,8 @@ public class Mapa extends JPanel{
             buyYdown = 0;
             buyXright = 0;
             randInt = 0;
+            randNums = 0;
+            turno = 0;
             guerra = null;
             talk = new JLabel(new ImageIcon(getClass().getResource("imagenes/interfaz/canDo.png")));
             personaje = new Personaje(1);
@@ -221,7 +225,7 @@ public class Mapa extends JPanel{
                    if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){ //Aqui se pone el rango en que se puede hablar con un personaje y lo que este se va a decir, para nuevo rango y dialogo copiar todo y cambiar nombre, texto y condicion
                        nombre = "skull";
                        texto = "MAMA MIA";
-                       getMe().setFocusable(false);
+                       getMe().loseFocus(2);
                    }
                    else if((y >= 13 && y <= 15) && (x >= 46 && x <= 48)){
                        nombre = "guy in a rock";
@@ -269,9 +273,14 @@ public class Mapa extends JPanel{
                             personaje.muevete(3);     
                             randInt = rand.nextInt(149);
                             if(randInt == 3){
-                                guerra = new CampoBatalla();
+                                randNums = rand.nextInt(2);
+                                randEne1 = rand.nextInt(3);
+                                randEne2 = rand.nextInt(3);
+                                randEne3 = rand.nextInt(3);
+                                guerra = new CampoBatalla(800, randEne1, randEne2, randEne3);
                                 guerra.addWindowListener(new WindowAdapter() {
                                     public void windowClosed(WindowEvent we){
+                                        getMe().setVisible(true);
                                     }
                                 });
                             }
@@ -301,7 +310,16 @@ public class Mapa extends JPanel{
                             personaje.muevete(4);      
                             randInt = rand.nextInt(149);
                             if(randInt == 3){
-                                guerra = new CampoBatalla();
+                                randNums = rand.nextInt(2);
+                                randEne1 = rand.nextInt(3);
+                                randEne2 = rand.nextInt(3);
+                                randEne3 = rand.nextInt(3);
+                                guerra = new CampoBatalla(800, randEne1, randEne2, randEne3);
+                                guerra.addWindowListener(new WindowAdapter() {
+                                    public void windowClosed(WindowEvent we){
+                                        getMe().setVisible(true);
+                                    }
+                                });
                             }
                         }
                     }
@@ -328,7 +346,16 @@ public class Mapa extends JPanel{
                     personaje.muevete(1);      
                     randInt = rand.nextInt(149);
                             if(randInt == 3){
-                                guerra = new CampoBatalla();
+                                randNums = rand.nextInt(2);
+                                randEne1 = rand.nextInt(3);
+                                randEne2 = rand.nextInt(3);
+                                randEne3 = rand.nextInt(3);
+                                guerra = new CampoBatalla(800, randEne1, randEne2, randEne3);
+                                guerra.addWindowListener(new WindowAdapter() {
+                                    public void windowClosed(WindowEvent we){
+                                        getMe().setVisible(true);
+                                    }
+                                });
                             }
                 }
                 if((y >= 12 && y <= 14) && (x >= 6 && x <= 7)){
@@ -355,7 +382,16 @@ public class Mapa extends JPanel{
                             personaje.muevete(2);    
                             randInt = rand.nextInt(149);
                             if(randInt == 3){
-                                guerra = new CampoBatalla();
+                                randNums = rand.nextInt(4);
+                                randEne1 = rand.nextInt(4);
+                                randEne2 = rand.nextInt(4);
+                                randEne3 = rand.nextInt(4);
+                                guerra = new CampoBatalla(800, randEne1, randEne2, randEne3);
+                                guerra.addWindowListener(new WindowAdapter() {
+                                    public void windowClosed(WindowEvent we){
+                                        getMe().setVisible(true);
+                                    }
+                                });
                             }
                         }
                     }   
@@ -384,6 +420,10 @@ public class Mapa extends JPanel{
     }    
     public String getTexto(){
         return texto;
+    }
+    public void loseFocus(int i){
+        this.setFocusable(false);
+        turno = i;
     }
 }
  

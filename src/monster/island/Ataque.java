@@ -19,19 +19,49 @@ public class Ataque extends JLabel{
     private int damage, fotograma;
     private String nom_att;
     private Timer tiempo;
-    public Ataque(){
+    public Ataque(String nom){
         damage = 0;
-        nom_att = "";
-        tiempo = new Timer(120,new ActionListener(){ //Este timer es responsable de la animacion de golpe del ataque
+        nom_att = nom;
+        fotograma = 1;
+        this.setSize(100, 100);
+        this.setVisible(false);
+        tiempo = new Timer(100,new ActionListener(){ //Este timer es responsable de la animacion de golpe del ataque
             @Override
             public void actionPerformed(ActionEvent e) {
-                setIcon(new ImageIcon(getClass().getResource("imagenes/ataques/"+nom_att+"/"+fotograma+".jpg")));//recibe  el nombre del ataque y el fotograma, busca carpeta con nombre de ataque e imagen con nombre de fotograma
+                getMe().setVisible(true);
+                setIcon(new ImageIcon(getClass().getResource("imagenes/ataques/"+nom_att+"/"+fotograma+".png")));//recibe  el nombre del ataque y el fotograma, busca carpeta con nombre de ataque e imagen con nombre de fotograma
                 fotograma++; //pasa el fotograma
-                if(fotograma == 4){ //si el fotograma es 4 (debatible) para el timer 
+                if(fotograma == 12){ //si el fotograma es 12 (debatible) para el timer 
+                    fotograma = 1;
+                    getMe().setVisible(false);
                     tiempo.stop();
                 }
             } 
         });
+        if(nom_att == "fuego"){
+            this.setDamage(70);
+        }
+        else if(nom_att == "laser"){
+            this.setDamage(45);
+        }
+        else if(nom_att == "mirada"){
+            this.setDamage(-40);
+        }
+        else if(nom_att == "rasguño"){
+            this.setDamage(40);
+        }
+        else if(nom_att == "puñetazo"){
+            this.setDamage(30);
+        }
+        else if(nom_att == "mordida"){
+            this.setDamage(35);
+        }
+        else if(nom_att == "cura"){
+            this.setDamage(-150);
+        }
+    }
+    private Ataque getMe(){
+        return this;
     }
     public void Atacar(){ //metodo que da inicio a la animacion
         tiempo.start();

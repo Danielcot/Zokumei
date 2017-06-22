@@ -1,31 +1,68 @@
 package monster.island;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 public class Enemigo  extends JLabel{
+    private Timer animaciones;
     private int HP, ATT, DEF, fotograma, randInt, noAtaques;
-    private String nombre;
-    private Ataque att1, att2, att3, att4;
+    public Ataque laser, mirada, rasguño, puñetazo, mordida;
+    private String myName;
+    public String att_name1, att_name2;
     private Random rand;
-    public Enemigo()
+    public Enemigo(String nombre)
     {
+        fotograma = 1;
+        myName = nombre;
+        this.setIcon(new ImageIcon(getClass().getResource("imagenes/enemigos/"+myName+"/1.png")));
+        this.setSize(100, 150);
+        animaciones = new Timer(100, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getMe().setIcon(new ImageIcon(getClass().getResource("imagenes/enemigos/"+getNombre()+"/"+fotograma+".png")));
+                fotograma++;
+                if(fotograma == 10){
+                    fotograma = 1;
+                    animaciones.stop();
+                }
+            }         
+        });
+        att_name1 = "";
+        att_name2 = "";
         rand = new Random();
-        att1 = new Ataque();
-        att2 = new Ataque();
-        att3 = new Ataque();
-        att4 = new Ataque();
+        laser = new Ataque("laser");
+        mirada = new Ataque("mirada");
+        rasguño = new Ataque("rasguño");
+        puñetazo = new Ataque("puñetazo");
+        mordida = new Ataque("mordida");
         noAtaques = 0;
         randInt = 0; //Aqui hay un entero asignado al azar, que es responsable de elegir que ataque usara el enemigo
         noAtaques = 0; //el numero de ataques que puede llegar a usar un enemigo (maximo 4)
-        HP = 0;
-        ATT = 0;
-        DEF = 0;
-        nombre = "";
-        fotograma = 0; //responsable de la animacion de ataque y de estar parado
+        if(myName == "ojo"){
+            this.setHP(570);
+            this.setATT(70);
+            this.setDEF(30);
+        }
+        else if(myName == "karateka"){
+            this.setHP(600);
+            this.setATT(40);
+            this.setDEF(42);
+        }
+        else if(myName == "conejo"){
+            this.setHP(450);
+            this.setATT(50);
+            this.setDEF(20);
+        }
+    }
+    private Enemigo getMe(){
+        return this;
     }
     public void setNombre(String nom){ //metodo para nombrar al enemigo
-        this.nombre = nom;
+        myName = nom;
     }
     public void setATT(int at){//metodo para darle una cantidad de ataque al enemigo
         this.ATT = at;
@@ -37,7 +74,7 @@ public class Enemigo  extends JLabel{
         this.HP = hp;
     }
     public String getNombre(){//metodo para obtener el nombre del enemigo
-        return this.nombre;
+        return this.myName;
     }
     public int getHP(){//metodo para obtener la vida del enemigo
         return this.HP;
@@ -49,70 +86,71 @@ public class Enemigo  extends JLabel{
         return this.ATT;
     }
     public int Ataca(){ //Metodo para iniciar la animacion de ataque y dar un valor de daño que aplicara el enemigo
+        randInt = rand.nextInt(2);
         switch(randInt){//utiliza un entero generado al azar
             case 0:
-                att1.Atacar();//Inicia la animacion de golpe
-                fotograma = 4;//fotograma de ataque
-                return att1.getDamage()+this.getATT();//daño aplicado
+                if(myName == "ojo"){
+                    att_name1 = laser.getNomAtt(); 
+                    animaciones.start();
+                    laser.Atacar();
+                    return (laser.getDamage()+this.ATT);
+                }
+                if(myName == "conejo"){
+                    att_name1 = mordida.getNomAtt();
+                    animaciones.start();
+                    mordida.Atacar();
+                    return (mordida.getDamage()+this.ATT);
+                }
+                if(myName == "karateka"){
+                    att_name1 = puñetazo.getNomAtt();
+                    animaciones.start();
+                    puñetazo.Atacar();
+                    return (puñetazo.getDamage()+this.ATT);
+                }
             case 1:
-                att2.Atacar();
-                fotograma = 4;//fotograma de ataque
-                return att2.getDamage()+this.getATT();//daño aplicado
-            case 2:
-                att3.Atacar();//Inicia la animacion de golpe
-                fotograma = 4;//fotograma de ataque
-                return att3.getDamage()+this.getATT();//daño aplicado
-            case 3:
-                att4.Atacar();//Inicia la animacion de golpe
-                fotograma = 4;//fotograma de ataque
-                return att4.getDamage()+this.getATT();//daño aplicado
-        }
+                if(myName == "ojo"){
+                    att_name2 = mirada.getNomAtt();
+                    animaciones.start();
+                    mirada.Atacar();
+                    return (mirada.getDamage()+this.ATT);
+                }
+                if(myName == "conejo"){
+                    att_name2 = rasguño.getNomAtt();
+                    animaciones.start();
+                    rasguño.Atacar();
+                    return (rasguño.getDamage()+this.ATT);
+                }
+                if(myName == "karateka"){
+                    att_name2 = puñetazo.getNomAtt();
+                    animaciones.start();
+                    puñetazo.Atacar();
+                    return (puñetazo.getDamage()+this.ATT);
+                }
+            }
         return -1;//en caso de que falle por mal codigo
-    }
-    public void setAtaque1Daño(int i){//metodo para ponerle valor de daño al ataque1
-        att1.setDamage(i);
-    }
-    public void setAtaque2Daño(int i){//metodo para ponerle valor de daño al ataque2
-        att1.setDamage(i);
-    }
-    public void setAtaque3Daño(int i){//metodo para ponerle valor de daño al ataque3
-        att1.setDamage(i);
-    }
-    public void setAtaque4Daño(int i){//metodo para ponerle valor de daño al ataque4
-        att1.setDamage(i);
-    }
-    public void setAtaque1Nombre(String attNom){//metodo para ponerle nombre al ataque1
-        att1.setNomAtt(attNom);
-    }
-    public void setAtaque2Nombre(String attNom){//metodo para ponerle nombre al ataque1
-        att2.setNomAtt(attNom);
-    }
-    public void setAtaque3Nombre(String attNom){//metodo para ponerle nombre al ataque1
-        att3.setNomAtt(attNom);
-    }
-    public void setAtaque4Nombre(String attNom){//metodo para ponerle nombre al ataque1
-        att4.setNomAtt(attNom);
-    }
-    public void setNoAtaques(int no){//metodo para poner el numero de ataques que puede tener el enemigo (maximo 4) 
-        this.noAtaques = no;
-        switch(noAtaques){ //si el numero de ataques es menor a 4 se elimina toda referencia a los ataques no usados
-            case 0:
-                att2 = null;
-                att3 = null;
-                att4 = null;
-                break;
-            case 1:
-                att3 = null;
-                att4 = null;
-                break;
-            case 2:
-                att4 = null;
-                break;
-            case 3:
-                break;
-        }
     }
     public int getFotograma(){//metodo para obtener el fotograma actual
         return this.fotograma;
+    }
+    public String getAttName(){
+        if(randInt == 0){
+            return att_name1;
+        }
+        else{
+            return att_name2;
+        }
+    }
+    public void setAtaqueLocation(int x, int y){
+        if(myName == "ojo"){
+            laser.setLocation(x, y);
+            mirada.setLocation(x, y);
+        }
+        else if(myName == "conejo"){
+            mordida.setLocation(x, y);
+            rasguño.setLocation(x, y);
+        }
+        else if(myName == "karateka"){
+            puñetazo.setLocation(x, y);
+        }
     }
 }

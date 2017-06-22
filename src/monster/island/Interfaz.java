@@ -20,27 +20,39 @@ import javax.swing.JPanel;
 public class Interfaz extends JPanel{
     private JButton pausa;
     private Image fondillo;
+    public boolean paused, isPausable;
     public Interfaz(){
         super();
-        pausa = new JButton("Salir");
+        pausa = new JButton();
         fondillo = new ImageIcon(getClass().getResource("imagenes/interfaz/fondillo.png")).getImage();
         this.setSize(430,720);
         this.setOpaque(false);
         this.setLocation(720,0);
         this.add(pausa);
+        isPausable = true;
+        paused = false;
         this.setLayout(null);
-        pausa.setSize(200, 50);
-        pausa.setLocation(0, 0);
+        pausa.setSize(40, 40);
+        pausa.setLocation(380, 10);
         this.setVisible(true);
         pausa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                getMe().setVisible(false);
+                if(isPausable == true){
+                    paused = !paused;
+                    getMe().setFocusable(paused);
+                    if(paused == true){
+                        getMe().requestFocus();
+                    }
+                }
             }
         });
     }
     private Interfaz getMe(){
         return this;
+    }
+    public void setPaused(boolean is){
+        isPausable = is;
     }
     @Override
     protected void paintComponent(Graphics g){
